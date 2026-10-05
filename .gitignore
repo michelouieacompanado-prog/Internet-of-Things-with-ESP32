@@ -1,0 +1,19 @@
+# PlatformIO & Build artifacts
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+sdkconfig
+*.bin
+*.elf
+*.map
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
