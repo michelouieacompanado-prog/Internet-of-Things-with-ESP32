@@ -1,3 +1,12 @@
+/**
+* ============================================================================
+* @file app_sw.c
+* @author Member 3 Name (shyanenovelle.canayan@g.msuiit.edu.ph)
+* @brief Relay Actuator Hardware Controller (GPIO4)
+* @note Responds to Generic OnOff Server (Gateway) and Client (Sensor) events.
+* ============================================================================
+*/
+
 #include "app_sw.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
