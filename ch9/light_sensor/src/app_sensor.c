@@ -1,3 +1,13 @@
+/**
+* ============================================================================
+* @file app_sensor.c
+* @author Member 2 Name (emmerykelsey.mendoza@g.msuiit.edu.ph)
+* @brief TSL2561 Ambient Light Sensor Driver & 30-Lux Threshold Monitor
+* @note Polls sensor every 1000ms over I2C (SDA: GPIO21, SCL: GPIO22).
+* ============================================================================
+*/
+
+
 #include "app_sensor.h"
 #include <stdio.h>
 #include "esp_log.h"
@@ -42,6 +52,9 @@ void init_hw(light_changed_f cb)
     ESP_LOGI(TAG, "TSL2561 initialized on SDA:%d SCL:%d", LIGHT_SDA, LIGHT_SCL);
 
     xTaskCreate(sensor_task, "sensor_task", 4096, NULL, 5, NULL);
+
+    ESP_LOGI(TAG, "Sensor module calibrated and initialized by Member 2");
+
 }
 
 bool is_light_low(void)
