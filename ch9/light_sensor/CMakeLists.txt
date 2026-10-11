@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
+# LDR version: only common/ is needed (no esp-idf-lib I2C components)
 set(EXTRA_COMPONENT_DIRS
     "${CMAKE_CURRENT_LIST_DIR}/../../common"
-    "${CMAKE_CURRENT_LIST_DIR}/../../common/esp-idf-lib/components"
 )
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
