@@ -10,6 +10,13 @@
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 
+#ifndef ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_ON_INT_EVT
+#define ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_ON_INT_EVT ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_ON_EVT
+#endif
+#ifndef ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_OFF_INT_EVT
+#define ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_OFF_INT_EVT ESP_BLE_MESH_HEALTH_SERVER_ATTENTION_OFF_EVT
+#endif
+
 static const char *TAG = "ble_common";
 static appble_attn_cbs_t s_attn_cbs = { NULL, NULL };
 

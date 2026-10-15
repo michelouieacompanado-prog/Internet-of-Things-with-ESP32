@@ -4,6 +4,8 @@
 .piolibdeps/
 build/
 sdkconfig
+sdkconfig.*
+!sdkconfig.defaults
 *.bin
 *.elf
 *.map

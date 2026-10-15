@@ -10,6 +10,8 @@
 #include "esp_ble_mesh_generic_model_api.h"
 #include "esp_ble_mesh_health_model_api.h"
 
+#include "esp_idf_version.h"
+
 #define TAG "app_ble"
 #define CID_ESP 0x02E5
 
@@ -18,10 +20,18 @@ static uint8_t dev_uuid[16];
 static esp_ble_mesh_cfg_srv_t config_server = {
     .relay = ESP_BLE_MESH_RELAY_DISABLED,
     .beacon = ESP_BLE_MESH_BEACON_ENABLED,
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+#if defined(CONFIG_BLE_MESH_FRIEND)
+    .friend_state = ESP_BLE_MESH_FRIEND_ENABLED,
+#else
+    .friend_state = ESP_BLE_MESH_FRIEND_NOT_SUPPORTED,
+#endif
+#else
 #if defined(CONFIG_BLE_MESH_FRIEND)
     .frnd = ESP_BLE_MESH_FRIEND_ENABLED,
 #else
     .frnd = ESP_BLE_MESH_FRIEND_NOT_SUPPORTED,
+#endif
 #endif
 #if defined(CONFIG_BLE_MESH_GATT_PROXY_SERVER)
     .gatt_proxy = ESP_BLE_MESH_GATT_PROXY_ENABLED,
@@ -95,7 +105,11 @@ static void generic_server_cb(esp_ble_mesh_generic_server_cb_event_t event,
         ESP_LOGI(TAG, "ESP_BLE_MESH_GENERIC_SERVER_RECV_SET_MSG_EVT");
         if (param->ctx.recv_op == ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET ||
             param->ctx.recv_op == ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK) {
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+            s_onoff_state = param->value.set.onoff.onoff;
+#else
             s_onoff_state = param->value.set.generic.onoff.onoff;
+#endif
             if (param->ctx.recv_op == ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET) {
                 esp_ble_mesh_server_model_send_msg(param->model, &param->ctx,
                                                    ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_STATUS,
