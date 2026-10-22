@@ -82,6 +82,8 @@ void appip_connect_wifi(connect_wifi_params_t params)
                 .capable = true,
                 .required = false
             },
+            .scan_method = WIFI_ALL_CHANNEL_SCAN,
+            .sort_method = WIFI_CONNECT_AP_BY_SIGNAL,
         },
     };
 
