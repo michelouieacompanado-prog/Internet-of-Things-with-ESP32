@@ -43,7 +43,14 @@ static esp_ble_mesh_cfg_srv_t config_server = {
     .relay_retransmit = ESP_BLE_MESH_TRANSMIT(2, 20),
 };
 
+static const uint8_t health_test_ids[] = { 0x00 };
+
 static esp_ble_mesh_health_srv_t health_server = {
+    .health_test = {
+        .id_count = 1,
+        .test_ids = health_test_ids,
+        .company_id = CID_ESP,
+    },
 };
 
 ESP_BLE_MESH_MODEL_PUB_DEFINE(health_pub_0, 2 + 11, ROLE_NODE);
@@ -128,6 +135,7 @@ void init_ble(appble_attn_cbs_t cbs)
     esp_ble_mesh_register_generic_client_callback(generic_client_cb);
 
     ESP_ERROR_CHECK(esp_ble_mesh_init(&provision, &composition));
+    esp_ble_mesh_set_unprovisioned_device_name("GatewayNode");
     ESP_ERROR_CHECK(esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT));
     ESP_LOGI(TAG, "BLE Mesh gateway node initialized successfully");
 }

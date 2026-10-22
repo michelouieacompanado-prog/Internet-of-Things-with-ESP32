@@ -19,8 +19,8 @@ static void attn_off(void)
 
 void app_main(void)
 {
-    init_hw(appble_update_state);
     appled_init();
     appble_attn_cbs_t cbs = {attn_on, attn_off};
     init_ble(cbs);
+    init_hw(appble_update_state);
 }
