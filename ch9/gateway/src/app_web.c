@@ -80,6 +80,8 @@ void appweb_start_server(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.max_uri_handlers = 8;
+    config.max_req_hdr_len = 1024;
+    config.max_resp_headers = 16;
 
     ESP_LOGI(TAG, "Starting web server on port: %d", config.server_port);
     if (httpd_start(&s_server, &config) == ESP_OK) {
