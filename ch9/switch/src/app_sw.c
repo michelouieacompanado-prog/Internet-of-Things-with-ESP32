@@ -15,7 +15,7 @@ void init_hw(void)
         .intr_type = GPIO_INTR_DISABLE,
     };
     gpio_config(&io_conf);
-    gpio_set_level(RELAY_PIN, 0);
+    gpio_set_level(RELAY_PIN, 1);  /* active-LOW relay: HIGH = OFF at startup */
     s_relay_state = false;
     ESP_LOGI(TAG, "Relay initialized on GPIO %d (State: OFF)", RELAY_PIN);
 }
@@ -23,7 +23,7 @@ void init_hw(void)
 void switch_set(bool state)
 {
     s_relay_state = state;
-    gpio_set_level(RELAY_PIN, state ? 1 : 0);
+    gpio_set_level(RELAY_PIN, state ? 0 : 1);  /* active-LOW: 0=ON, 1=OFF */
     ESP_LOGI(TAG, "Relay state changed to %s", state ? "ON" : "OFF");
 }
 

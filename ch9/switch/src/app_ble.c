@@ -147,9 +147,17 @@ static void generic_client_cb(esp_ble_mesh_generic_client_cb_event_t event,
              param->params ? param->params->opcode : 0);
 
     switch (event) {
+    case ESP_BLE_MESH_GENERIC_CLIENT_PUBLISH_EVT:
+        {
+            bool onoff = param->status_cb.onoff_status.present_onoff ? true : false;
+            ESP_LOGI(TAG, "Generic client received publish OnOff status: %d", onoff);
+            if (s_cbs.sw_set) {
+                s_cbs.sw_set(onoff);
+            }
+        }
+        break;
     case ESP_BLE_MESH_GENERIC_CLIENT_GET_STATE_EVT:
     case ESP_BLE_MESH_GENERIC_CLIENT_SET_STATE_EVT:
-    case ESP_BLE_MESH_GENERIC_CLIENT_PUBLISH_EVT:
         if (param->params && param->params->opcode == ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_STATUS) {
             bool onoff = param->status_cb.onoff_status.present_onoff ? true : false;
             ESP_LOGI(TAG, "Generic client received OnOff status: %d", onoff);

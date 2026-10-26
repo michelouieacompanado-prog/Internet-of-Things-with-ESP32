@@ -43,19 +43,23 @@ static void sensor_task(void *pvParameters)
     while (1) {
         int level = gpio_get_level(LDR_DO_PIN);
 
-        /* LOW (0) = dark, HIGH (1) = bright */
-        bool is_dark = (level == 0);
+        /* Inverted sensor logic: DO=1 is dark when covered, DO=0 is bright */
+        bool is_dark = (level == 1);
+
+        /* Always print current state so serial monitor shows activity */
+        ESP_LOGI(TAG, "LDR reading: DO=%d  -->  %s",
+                 level, is_dark ? "DARK" : "BRIGHT");
 
         if (s_first_read || is_dark != s_is_dark) {
             s_is_dark = is_dark;
             s_first_read = false;
-            ESP_LOGI(TAG, "LDR state changed: %s (DO pin level = %d)",
-                     s_is_dark ? "DARK (relay ON)" : "BRIGHT (relay OFF)", level);
+            ESP_LOGI(TAG, "*** STATE CHANGED: %s ***",
+                     s_is_dark ? "DARK (relay ON)" : "BRIGHT (relay OFF)");
             if (s_callback) {
                 s_callback(s_is_dark);
             }
         }
-        vTaskDelay(pdMS_TO_TICKS(500)); /* Poll every 500ms */
+        vTaskDelay(pdMS_TO_TICKS(1000)); /* Poll every 1 second */
     }
 }
 
@@ -83,7 +87,7 @@ void init_hw(light_changed_f cb)
     ESP_LOGI(TAG, "LDR Module initialized on GPIO%d (DO pin)", LDR_DO_PIN);
     ESP_LOGI(TAG, "Adjust the blue potentiometer on the LDR module to set light threshold.");
 
-    xTaskCreate(sensor_task, "ldr_sensor_task", 2048, NULL, 5, NULL);
+    xTaskCreate(sensor_task, "ldr_sensor_task", 4096, NULL, 5, NULL);
 }
 
 /**
