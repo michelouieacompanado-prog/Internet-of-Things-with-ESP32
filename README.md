@@ -83,3 +83,92 @@ export WIFI_SSID="your_wifi_ssid"
 export WIFI_PASS="your_wifi_password"
 pio run -t upload
 ```
+
+---
+
+## 🧪 Testing
+
+The application logic for each node is verified with the PlatformIO **Unity** test framework on the `native` environment, which builds and runs the tests on the host machine. Static analysis is performed with **cppcheck**, which PlatformIO installs automatically. Neither check requires ESP32 hardware.
+
+### Running the Tests
+
+Run the following commands from the directory of the node under test (`gateway`, `light_sensor`, or `switch`):
+
+```bash
+cd ch9/<node>
+pio test -e native     # Unit tests
+pio check -e native    # Static analysis
+```
+
+### Results Summary
+
+| Node | Unit Tests | Static Analysis (cppcheck) |
+|------|:----------:|:--------------------------:|
+| Gateway (`ch9/gateway`) | ✅ Passed (2/2) | ✅ Passed (6 low) |
+| Light Sensor (`ch9/light_sensor`) | ✅ Passed | ✅ Passed (5 low) |
+| Switch (`ch9/switch`) | ✅ Passed (3/3) | ✅ Passed (5 low) |
+
+No HIGH or MEDIUM severity findings were reported.
+
+### Unit Test Details
+
+#### Switch Node
+
+Test file: `ch9/switch/test/test_switch_state.cpp`
+
+| Test Case | Description | Result |
+|-----------|-------------|:------:|
+| `test_switch_off` | Verifies that the switch state can be set to OFF | ✅ Passed |
+| `test_switch_on` | Verifies that the switch state can be set to ON | ✅ Passed |
+| `test_switch_can_turn_off_after_on` | Verifies that the switch returns to OFF after being turned ON | ✅ Passed |
+
+**Summary:** 3 test cases, 3 succeeded, completed in 3.37 s.
+
+#### Gateway Node
+
+Test file: `ch9/gateway/test/test_switch_command.cpp`
+
+| Test Case | Description | Result |
+|-----------|-------------|:------:|
+| `test_switch_on_returns_one` | Verifies that an ON command returns `1` | ✅ Passed |
+| `test_switch_off_returns_zero` | Verifies that an OFF command returns `0` | ✅ Passed |
+
+**Summary:** 2 test cases, 2 succeeded, completed in 4.21 s.
+
+### Static Analysis
+
+Tool: cppcheck (v1.21100.230717), executed through `pio check`.
+
+| Node | HIGH | MEDIUM | LOW | Status |
+|------|:----:|:------:|:---:|:------:|
+| Gateway | 0 | 0 | 6 | ✅ Passed |
+| Light Sensor | 0 | 0 | 5 | ✅ Passed |
+| Switch | 0 | 0 | 5 | ✅ Passed |
+
+All LOW findings are of type `unusedFunction` (style). The complete list is shown below.
+
+<details>
+<summary>View LOW-severity findings</summary>
+
+| Node | File | Line | Function |
+|------|------|-----:|----------|
+| Gateway | `src/app_ble.c` | 101 | `appble_set_switch` |
+| Gateway | `src/app_ble.c` | 125 | `init_ble` |
+| Gateway | `src/app_ip.c` | 54 | `appip_connect_wifi` |
+| Gateway | `src/app_web.c` | 48 | `appweb_init` |
+| Gateway | `src/app_web.c` | 53 | `appweb_start_server` |
+| Gateway | `src/main.c` | 32 | `app_main` |
+| Light Sensor | `src/app_ble.c` | 132 | `appble_update_state` |
+| Light Sensor | `src/app_ble.c` | 145 | `init_ble` |
+| Light Sensor | `src/app_sensor.c` | 73 | `init_hw` |
+| Light Sensor | `src/app_sensor.c` | 98 | `is_light_low` |
+| Light Sensor | `src/main.c` | 20 | `app_main` |
+| Switch | `src/app_ble.c` | 174 | `init_ble` |
+| Switch | `src/app_sw.c` | 8 | `init_hw` |
+| Switch | `src/app_sw.c` | 23 | `switch_set` |
+| Switch | `src/app_sw.c` | 30 | `switch_get` |
+| Switch | `src/main.c` | 20 | `app_main` |
+
+</details>
+
+**Note:** The flagged functions are module API functions, functions passed between modules as callbacks, or the `app_main` entry point. cppcheck does not resolve these call sites across source files in this configuration, so they are reported as unused. These are style-level notices and do not indicate functional defects.
