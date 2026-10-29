@@ -110,6 +110,11 @@ pio check -e native    # Static analysis
 
 No HIGH or MEDIUM severity findings were reported.
 
+**Overall unit test**
+
+<img width="312" height="173" alt="unit-test-overall" src="https://github.com/user-attachments/assets/ad19f0a1-9e46-4927-ad51-b9dee1c5716f" />
+
+
 ### Unit Test Details
 
 #### Switch Node
@@ -122,6 +127,11 @@ Test file: `ch9/switch/test/test_switch_state.cpp`
 | `test_switch_on` | Verifies that the switch state can be set to ON | ✅ Passed |
 | `test_switch_can_turn_off_after_on` | Verifies that the switch returns to OFF after being turned ON | ✅ Passed |
 
+**Switch unit test**
+
+<img width="709" height="380" alt="unit-test-switch" src="https://github.com/user-attachments/assets/f7c32f67-a98c-42b4-a1df-f4da643bbaa0" />
+
+
 **Summary:** 3 test cases, 3 succeeded, completed in 3.37 s.
 
 #### Gateway Node
@@ -132,6 +142,10 @@ Test file: `ch9/gateway/test/test_switch_command.cpp`
 |-----------|-------------|:------:|
 | `test_switch_on_returns_one` | Verifies that an ON command returns `1` | ✅ Passed |
 | `test_switch_off_returns_zero` | Verifies that an OFF command returns `0` | ✅ Passed |
+
+**Gateway unit test**
+<img width="675" height="368" alt="unit-test-gateway" src="https://github.com/user-attachments/assets/0d6b846a-8d09-4954-88f8-393a08c022b7" />
+
 
 **Summary:** 2 test cases, 2 succeeded, completed in 4.21 s.
 
@@ -144,6 +158,16 @@ Tool: cppcheck (v1.21100.230717), executed through `pio check`.
 | Gateway | 0 | 0 | 6 | ✅ Passed |
 | Light Sensor | 0 | 0 | 5 | ✅ Passed |
 | Switch | 0 | 0 | 5 | ✅ Passed |
+
+**Light sensor cppcheck**
+
+<img width="676" height="344" alt="static-analysis-light-sensor" src="https://github.com/user-attachments/assets/5703e87a-aa05-4f87-b590-38e1516043f8" />
+
+
+**Switch cppcheck**
+
+<img width="312" height="173" alt="unit-test-overall" src="https://github.com/user-attachments/assets/40ce77b0-517e-4c35-8457-ecdac7183fbb" />
+
 
 All LOW findings are of type `unusedFunction` (style). The complete list is shown below.
 
