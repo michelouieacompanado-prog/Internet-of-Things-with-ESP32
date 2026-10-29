@@ -144,6 +144,7 @@ Test file: `ch9/gateway/test/test_switch_command.cpp`
 | `test_switch_off_returns_zero` | Verifies that an OFF command returns `0` | ✅ Passed |
 
 **Gateway unit test**
+
 <img width="675" height="368" alt="unit-test-gateway" src="https://github.com/user-attachments/assets/0d6b846a-8d09-4954-88f8-393a08c022b7" />
 
 
