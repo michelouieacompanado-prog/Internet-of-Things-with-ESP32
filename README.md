@@ -114,6 +114,7 @@ No HIGH or MEDIUM severity findings were reported.
 
 <img width="312" height="173" alt="unit-test-overall" src="https://github.com/user-attachments/assets/ad19f0a1-9e46-4927-ad51-b9dee1c5716f" />
 
+
 ### Unit Test Details
 
 #### Switch Node
@@ -129,6 +130,7 @@ Test file: `ch9/switch/test/test_switch_state.cpp`
 **Switch unit test**
 
 <img width="709" height="380" alt="unit-test-switch" src="https://github.com/user-attachments/assets/f7c32f67-a98c-42b4-a1df-f4da643bbaa0" />
+
 
 **Summary:** 3 test cases, 3 succeeded, completed in 3.37 s.
 
@@ -161,7 +163,9 @@ Tool: cppcheck (v1.21100.230717), executed through `pio check`.
 
 <img width="676" height="344" alt="static-analysis-light-sensor" src="https://github.com/user-attachments/assets/5703e87a-aa05-4f87-b590-38e1516043f8" />
 
+
 **Switch cppcheck**
+
 <img width="312" height="173" alt="unit-test-overall" src="https://github.com/user-attachments/assets/40ce77b0-517e-4c35-8457-ecdac7183fbb" />
 
 
